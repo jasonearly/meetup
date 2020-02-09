@@ -5,12 +5,20 @@ import { InfoAlert } from "./Alert";
 class CitySearch extends Component {
   state = {
     query: "",
-    suggestions: []
+    suggestions: [],
+    infoText: " "
   };
 
   handleInputChanged = event => {
     const value = event.target.value;
     this.setState({ query: value });
+
+    if (!navigator.onLine) {
+      this.setState({
+        infoText: "No Network Connection! Event list loaded from last session."
+      });
+    }
+
     getSuggestions(value).then(suggestions => {
       this.setState({ suggestions });
 
